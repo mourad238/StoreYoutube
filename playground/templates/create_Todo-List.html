@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Create Todo-List</title>
+</head>
+<body>
+        <div id="todo-list">
+            <h1>Todo List</h1>
+
+            <form method="post" action="{% url 'todo_page_create' %}" id="todo-form">
+                {% csrf_token %}
+                <input type="text" id="new-task" name="task_Text" placeholder="Add a new task" required>
+                <input type="date" name="date_created" id="date-created" required min="{{ current_date }}">
+                <button type="submit" id="add-task">Add</button>
+            </form>
+            <ul id="task-list">
+                <!-- Tasks will be added here dynamically using JavaScript -->
+                {% if all_tasks %}
+                {% for Task in all_tasks %}
+                    <input type="checkbox" class="done">
+                    <span>{{Task.task_Text}}</span>
+                    <button class="delete-button">Delete</button>
+                    <br>
+                {% endfor %}
+                {% endif %}
+
+            </ul>
+        </div>
+        <script src="{% static 'app.js' %}"></script>
+</body>
+</html>
