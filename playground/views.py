@@ -17,7 +17,25 @@ def index(request):
     return HttpResponse(html)
 
 def create_todo_page(request):
-    # if request.method == 'POST':
+    if request.method == 'POST':
+        task_txt = request.POST.get('task_Txt')
+        date_created = request.POST.get('date')
+
+        if task_txt:
+            new_Task = Todo(task_Text=task_txt, date_created=date_created, isDone=False)
+            new_Task.save()
+
+    all_tasks = Todo.objects.all() 
+    return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
+
+
+
+
+def view_todo_page(request,task_id):
+    #Connect to the database
+    task_id_text = Todo.objects.get(id=task_id).task_Text
+    return render(request, 'view_Todo-List.html', {'task_id': str(task_id), 'task_Text': task_id_text})
+
     #     form = TodoForm(request.POST)
     #     if form.is_valid():
     #         form.save()
@@ -25,12 +43,13 @@ def create_todo_page(request):
     # else:
     #     form = TodoForm(initial={'date_created': datetime.date.today()})  # Set the initial date
 
-    #Connect to the database
-    all_tasks = Todo.objects.all() 
-    return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})
+    # try:
+    #     form = request.POST['task_Text','date_created','done',]
+    #     return ''
+    # except ():
+    #     return ''
+    # else:
 
 
-def view_todo_page(request,task_id):
-    #Connect to the database
-    task_id_text = Todo.objects.get(id=task_id).task_Text
-    return render(request, 'view_Todo-List.html', {'task_id': str(task_id), 'task_Text': task_id_text})
+    #     something.save()
+        #Connect to the database
