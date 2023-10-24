@@ -22,7 +22,11 @@
                 <!-- Tasks will be added here dynamically using JavaScript -->
                 {% if all_tasks %}
                 {% for Task in all_tasks %}
+                    {% if Task.isDone %}
+                    <input type="checkbox" class="done" checked>
+                    {% else %}
                     <input type="checkbox" class="done">
+                    {% endif %}
                     <span>{{Task.task_Text}}</span>
                     <button class="delete-button">Delete</button>
                     <br>
