@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from .models import Todo
 import datetime
@@ -24,6 +25,8 @@ def create_todo_page(request):
         if task_txt:
             new_Task = Todo(task_Text=task_txt, date_created=date_created, isDone=False)
             new_Task.save()
+            # Redirect to the same page after successful submission
+            return redirect(reverse('todo_page_create'))
 
     all_tasks = Todo.objects.all() 
     return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
