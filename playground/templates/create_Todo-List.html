@@ -24,11 +24,13 @@
                 {% if all_tasks %}
                 {% for Task in all_tasks %}
                 <li>
-                    {% if Task.isDone %}
-                        <input type="checkbox" class="done" name="done" checked>
-                        {% else %}
-                        <input type="checkbox" class="done" name="done">
-                        {% endif %}
+                    
+                    <form method="post" action="{% url 'delete_todo' Task.id %}">
+                        {% csrf_token %}
+                        <input type="checkbox" class="done" name="done" {% if Task.isDone %} checked {%endif%}>
+                    </form>
+                        
+                      
                         <span>{{Task.task_Text}}</span>
                         <form method="post" action="{% url 'delete_todo' Task.id %}">
                             {% csrf_token %}
