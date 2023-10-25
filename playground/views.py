@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Todo
 import datetime
@@ -30,6 +31,18 @@ def create_todo_page(request):
 
     all_tasks = Todo.objects.all() 
     return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
+
+
+def delete_todo(request,task_id):
+    if request.method == 'POST':
+        # Use get_object_or_404 to get the specific Todo item
+        task = get_object_or_404(Todo, id=task_id)
+        # Delete the item
+        task.delete()
+    
+    # After deletion, you can redirect to the same page or a different page as needed.
+    return redirect('todo_page_create')
+
 
 
 

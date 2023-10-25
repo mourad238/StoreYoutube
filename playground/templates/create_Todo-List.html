@@ -25,12 +25,15 @@
                 {% for Task in all_tasks %}
                 <li>
                     {% if Task.isDone %}
-                        <input type="checkbox" class="done" checked>
+                        <input type="checkbox" class="done" name="done" checked>
                         {% else %}
-                        <input type="checkbox" class="done">
+                        <input type="checkbox" class="done" name="done">
                         {% endif %}
                         <span>{{Task.task_Text}}</span>
-                        <button class="delete-button">Delete</button>
+                        <form method="post" action="{% url 'delete_todo' Task.id %}">
+                            {% csrf_token %}
+                            <button class="delete-button" type="submit">Delete</button>
+                        </form>
                         <br>
                     </li>
                         {% endfor %}
